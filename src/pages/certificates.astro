@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { certificates, education } from '../data/profile';
+---
+<Base title="Certificates" description="Certifications in progress and planned, plus education.">
+  <div class="container">
+    <div class="page-head">
+      <span class="badge">Credentials</span>
+      <h1>Certificates & education</h1>
+      <p>What I've earned, what I'm studying now, and what's next on my roadmap.</p>
+    </div>
+
+    <section>
+      <div class="section-head"><div><h2>Certifications</h2></div></div>
+      <div class="cert-list">
+        {certificates.map((c) => (
+          <div class="cert">
+            <Icon name={c.icon} color={c.color} />
+            <div>
+              <h3>{c.name}</h3>
+              <p>{c.issuer}{c.note ? ` · ${c.note}` : ''}</p>
+              {c.status === 'In progress' && <div class="progress"><span style={`width:${c.progress}%`}></span></div>}
+            </div>
+            <span class={`status status-${c.status.replace(' ', '-')}`}>{c.status}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><div><h2>Education</h2></div></div>
+      <div class="cert-list">
+        {education.map((e) => (
+          <div class="cert">
+            <Icon name="award" color="violet" />
+            <div><h3>{e.title}</h3><p>{e.org}{e.when ? ` · ${e.when}` : ''}</p></div>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+</Base>

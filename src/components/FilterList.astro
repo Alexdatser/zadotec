@@ -1,0 +1,32 @@
+---
+// Tag filter buttons + a grid of cards. Clicking a tag hides cards without it.
+interface Props {
+  tags: string[];
+}
+const { tags } = Astro.props;
+---
+{tags.length > 0 && (
+  <div class="filters" data-filters>
+    <button class="filter active" data-tag="all">All</button>
+    {tags.map((t) => <button class="filter" data-tag={t}>{t}</button>)}
+  </div>
+)}
+<div class="grid" data-grid>
+  <slot />
+</div>
+
+<script is:inline>
+  document.querySelectorAll('[data-filters]').forEach((bar) => {
+    const grid = bar.nextElementSibling;
+    bar.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      bar.querySelectorAll('button').forEach((b) => b.classList.toggle('active', b === btn));
+      const tag = btn.dataset.tag;
+      grid.querySelectorAll('.card').forEach((card) => {
+        const tags = (card.dataset.tags || '').split('|');
+        card.style.display = tag === 'all' || tags.includes(tag) ? '' : 'none';
+      });
+    });
+  });
+</script>

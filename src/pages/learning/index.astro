@@ -1,0 +1,36 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import FilterList from '../../components/FilterList.astro';
+import { getPosts, allTags } from '../../lib/posts';
+
+const posts = await getPosts('learning');
+const tags = allTags(posts);
+---
+<Base title="Learning log" description="Short notes on what I study — Azure, networking, Windows Server, ITIL and AI — so I remember it and you can see the progress.">
+  <div class="container">
+    <div class="page-head">
+      <span class="badge">Notes</span>
+      <h1>Learning log</h1>
+      <p>Short notes on what I study — Azure, networking, Windows Server, ITIL and AI — so I remember it and you can see the progress.</p>
+    </div>
+    {posts.length === 0 ? (
+      <p class="empty">Nothing here yet — the first post is coming soon.</p>
+    ) : (
+      <FilterList tags={tags}>
+        {posts.map((p) => (
+          <PostCard
+            href={`/learning/${p.id}/`}
+            title={p.data.title}
+            summary={p.data.summary}
+            date={p.data.date}
+            tags={p.data.tags}
+            icon={p.data.icon}
+            color={p.data.color}
+            label={(p.data as any).topic}
+          />
+        ))}
+      </FilterList>
+    )}
+  </div>
+</Base>

@@ -1,0 +1,36 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import FilterList from '../../components/FilterList.astro';
+import { getPosts, allTags } from '../../lib/posts';
+
+const posts = await getPosts('case-studies');
+const tags = allTags(posts);
+---
+<Base title="Case studies" description="Real problems from enterprise IT work, written without confidential details: the symptom, how I found the cause, the fix and the lesson.">
+  <div class="container">
+    <div class="page-head">
+      <span class="badge">Real-world</span>
+      <h1>Case studies</h1>
+      <p>Real problems from enterprise IT work, written without confidential details: the symptom, how I found the cause, the fix and the lesson.</p>
+    </div>
+    {posts.length === 0 ? (
+      <p class="empty">Nothing here yet — the first post is coming soon.</p>
+    ) : (
+      <FilterList tags={tags}>
+        {posts.map((p) => (
+          <PostCard
+            href={`/case-studies/${p.id}/`}
+            title={p.data.title}
+            summary={p.data.summary}
+            date={p.data.date}
+            tags={p.data.tags}
+            icon={p.data.icon}
+            color={p.data.color}
+            label={(p.data as any).topic}
+          />
+        ))}
+      </FilterList>
+    )}
+  </div>
+</Base>

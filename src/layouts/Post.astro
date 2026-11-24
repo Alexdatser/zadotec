@@ -1,0 +1,38 @@
+---
+// Layout for a single post page (one project, case study or learning note).
+import Base from './Base.astro';
+import Icon from '../components/Icon.astro';
+
+interface Props {
+  title: string;
+  summary: string;
+  date: Date;
+  tags?: string[];
+  icon?: string;
+  color?: string;
+  status?: string;
+  backHref: string;
+  backLabel: string;
+}
+const { title, summary, date, tags = [], icon = 'book', color = 'blue', status, backHref, backLabel } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const fmt = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+<Base title={title} description={summary}>
+  <article class="article">
+    <a class="back" href={`${base}${backHref}`}>← {backLabel}</a>
+    <header>
+      <Icon name={icon} color={color} size="lg" />
+      <h1>{title}</h1>
+      <p class="summary">{summary}</p>
+      <div class="post-meta">
+        <span class="date">{fmt}</span>
+        {status && <span class={`status status-${status.replace(' ', '-')}`}>{status}</span>}
+        {tags.map((t) => <span class="tag">{t}</span>)}
+      </div>
+    </header>
+    <div class="prose">
+      <slot />
+    </div>
+  </article>
+</Base>

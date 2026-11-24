@@ -1,0 +1,36 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import FilterList from '../../components/FilterList.astro';
+import { getPosts, allTags } from '../../lib/posts';
+
+const posts = await getPosts('projects');
+const tags = allTags(posts);
+---
+<Base title="Projects" description="Hands-on things I build in my home lab and in the cloud — infrastructure, automation and AI tools.">
+  <div class="container">
+    <div class="page-head">
+      <span class="badge">Build</span>
+      <h1>Projects</h1>
+      <p>Hands-on things I build in my home lab and in the cloud — infrastructure, automation and AI tools.</p>
+    </div>
+    {posts.length === 0 ? (
+      <p class="empty">Nothing here yet — the first post is coming soon.</p>
+    ) : (
+      <FilterList tags={tags}>
+        {posts.map((p) => (
+          <PostCard
+            href={`/projects/${p.id}/`}
+            title={p.data.title}
+            summary={p.data.summary}
+            date={p.data.date}
+            tags={p.data.tags}
+            icon={p.data.icon}
+            color={p.data.color}
+            status={p.data.status}
+          />
+        ))}
+      </FilterList>
+    )}
+  </div>
+</Base>
