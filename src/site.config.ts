@@ -8,8 +8,8 @@ export const SITE = {
   tagline:
     'I keep multi-site enterprise IT running — networks, endpoints, servers and vendors — and I am building cloud and automation skills on top. This site is my public notebook: projects, real-world case studies and what I learn.',
   // TODO: put your real contact details here (leave '' to hide a link)
-  email: 'dostonbekzeripboyev@gmail.com',
-  linkedin: 'www.linkedin.com/in/dostonbekzeripboyev',
+  email: 'hello@zadotec.com',
+  linkedin: 'https://www.linkedin.com/in/dostonbekzeripboyev',
   github: 'https://github.com/Alexdatser',
   languages: 'English · Korean · Uzbek',
   openTo: 'Open to infrastructure, cloud and IT operations roles',
