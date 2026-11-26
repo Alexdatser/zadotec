@@ -16,8 +16,9 @@ confirm that NAT behaves the same way in simulation as it does on my real
 ISR4331.
 
 ## Topology
+![Packet Tracer topology](/images/packet-tracer-lab.png)
+*My home lab replicated in Packet Tracer*
 
-```
 Internet
    │
 [ SK ISP ]            2911 router — simulates my SK Broadband box (DHCP)
